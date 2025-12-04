@@ -16,6 +16,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 10
+      
 
   app:
     image: muhammadfawwaz/project-tracker:latest
