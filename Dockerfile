@@ -1,26 +1,24 @@
-# use a python image
-FROM python:3.6
-
-# set the working directory in the container to /app
+# Use a Maven image with JDK 11 to build the app
+FROM maven:3.8.7-eclipse-temurin-11 AS build
 WORKDIR /app
 
-# add the current directory to the container as /app
-COPY . /app
+# Copy pom.xml and download dependencies first (cache optimization)
+COPY pom.xml .
+RUN mvn dependency:go-offline -B
 
-# pip install flask
-RUN pip install --upgrade pip && \
-    pip install \
-        Flask \
-        awscli \
-        flake8 \
-        pylint \
-        pytest \
-        pytest-flask
+# Copy full project and build it
+COPY . .
+RUN mvn clean package -DskipTests
 
-# expose the default flask port
+# ---- RUNTIME IMAGE ----
+FROM eclipse-temurin:11-jre
+WORKDIR /app
+
+# Copy built JAR from previous stage
+COPY --from=build /app/target/*.jar app.jar
+
+# Expose application port
 EXPOSE 8080
 
-# execute the Flask app
-ENTRYPOINT ["python"]
-HEALTHCHECK CMD curl --fail http://localhost:8080/ || exit 1
-CMD ["/app/app.py"]
+# Run the application
+ENTRYPOINT ["java", "-jar", "app.jar"]
