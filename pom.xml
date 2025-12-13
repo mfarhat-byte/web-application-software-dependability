@@ -21,6 +21,10 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <jacoco.version>0.8.11</jacoco.version>
+        <!-- JaCoCo minimum coverage thresholds -->
+        <jacoco.line.coverage>0.80</jacoco.line.coverage>
+        <jacoco.branch.coverage>0.70</jacoco.branch.coverage>
     </properties>
 
     <dependencies>
@@ -63,7 +67,7 @@
             <optional>true</optional>
         </dependency>
 
-        <!-- Testing -->
+        <!-- Testing Dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -74,6 +78,40 @@
                     <artifactId>junit-vintage-engine</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+
+        <!-- JUnit 5 (Jupiter) - Already included in spring-boot-starter-test -->
+        <!-- But explicitly defining for clarity -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Mockito - Already included in spring-boot-starter-test -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- AssertJ for fluent assertions (optional but recommended) -->
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <scope>test</scope>
         </dependency>
 
         <!-- Frontend libs -->
@@ -106,6 +144,17 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
+            <!-- Surefire for running tests -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.2</version>
+                <configuration>
+                    <!-- Ensure JUnit 5 is used -->
+                    <useJUnitPlatform>true</useJUnitPlatform>
+                </configuration>
+            </plugin>
+
             <!-- Flyway -->
             <plugin>
                 <groupId>org.flywaydb</groupId>
@@ -122,14 +171,14 @@
                 </configuration>
             </plugin>
 
-            <!-- JaCoCo: Coverage + Report -->
+            <!-- JaCoCo: Coverage + Report + Enforcement -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.11</version>
+                <version>${jacoco.version}</version>
 
                 <executions>
-                    <!-- Attach JaCoCo agent -->
+                    <!-- Attach JaCoCo agent before tests run -->
                     <execution>
                         <id>prepare-agent</id>
                         <goals>
@@ -137,7 +186,7 @@
                         </goals>
                     </execution>
 
-                    <!-- Generate HTML report -->
+                    <!-- Generate HTML report after tests -->
                     <execution>
                         <id>report</id>
                         <phase>test</phase>
@@ -146,7 +195,45 @@
                         </goals>
                     </execution>
 
+                    <!-- Check coverage thresholds -->
+                    <execution>
+                        <id>jacoco-check</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <rule>
+                                    <element>BUNDLE</element>
+                                    <limits>
+                                        <limit>
+                                            <counter>LINE</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>${jacoco.line.coverage}</minimum>
+                                        </limit>
+                                        <limit>
+                                            <counter>BRANCH</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>${jacoco.branch.coverage}</minimum>
+                                        </limit>
+                                    </limits>
+                                </rule>
+                            </rules>
+                        </configuration>
+                    </execution>
+
                 </executions>
+
+                <!-- Exclude certain classes from coverage if needed -->
+                <configuration>
+                    <excludes>
+                        <!-- Exclude main application class -->
+                        <exclude>**/ProjectTrackerApplication.class</exclude>
+                        <!-- Exclude configuration classes if any -->
+                        <exclude>**/config/**</exclude>
+                    </excludes>
+                </configuration>
             </plugin>
 
             <!-- Automatically open JaCoCo report in browser (Windows) -->
