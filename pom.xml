@@ -35,10 +35,11 @@
         <!-- JMH for microbenchmarks -->
         <jmh.version>1.36</jmh.version>
 
-        <!-- SonarCloud -->
-        <sonar.organization>your-org-key</sonar.organization>
-        <sonar.projectKey>your-project-key</sonar.projectKey>
+        <!-- SonarCloud Configuration -->
+        <sonar.organization>mfarhat-byte</sonar.organization>
+        <sonar.projectKey>mfarhat-byte_project_tracker</sonar.projectKey>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
     </properties>
 
     <!-- ================= DEPENDENCIES ================= -->
