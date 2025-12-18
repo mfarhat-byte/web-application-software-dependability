@@ -34,12 +34,17 @@
 
         <!-- JMH for microbenchmarks -->
         <jmh.version>1.36</jmh.version>
+
+        <!-- SonarCloud -->
+        <sonar.organization>your-org-key</sonar.organization>
+        <sonar.projectKey>your-project-key</sonar.projectKey>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
 
     <!-- ================= DEPENDENCIES ================= -->
     <dependencies>
 
-        <!-- ================= SPRING BOOT ================= -->
+        <!-- Spring Boot -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -50,7 +55,7 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!-- ================= DATABASES ================= -->
+        <!-- Databases -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -63,14 +68,14 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- ================= THYMELEAF ================= -->
+        <!-- Thymeleaf -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
             <version>2.3.2.RELEASE</version>
         </dependency>
 
-        <!-- ================= DEV TOOLS ================= -->
+        <!-- DevTools -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -79,6 +84,7 @@
         </dependency>
 
         <!-- ================= TESTING ================= -->
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -103,7 +109,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- ================= FRONTEND ================= -->
+        <!-- Frontend -->
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>webjars-locator</artifactId>
@@ -123,6 +129,7 @@
         </dependency>
 
         <!-- ================= JMH BENCHMARKS ================= -->
+
         <dependency>
             <groupId>org.openjdk.jmh</groupId>
             <artifactId>jmh-core</artifactId>
@@ -142,13 +149,13 @@
     <build>
         <plugins>
 
-            <!-- ================= SPRING BOOT ================= -->
+            <!-- Spring Boot -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
-            <!-- ================= COMPILER ================= -->
+            <!-- Compiler -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -159,7 +166,7 @@
                 </configuration>
             </plugin>
 
-            <!-- ================= SUREFIRE ================= -->
+            <!-- Surefire -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -212,7 +219,7 @@
                 </executions>
             </plugin>
 
-            <!-- ================= PITEST MUTATION TESTING ================= -->
+            <!-- ================= PITEST ================= -->
             <plugin>
                 <groupId>org.pitest</groupId>
                 <artifactId>pitest-maven</artifactId>
@@ -292,7 +299,7 @@
                             <arguments>
                                 <argument>-classpath</argument>
                                 <classpath/>
-                                <argument>benchmarks.ItemBuilderBenchmark</argument>
+                                <argument>benchmarks.BenchmarkRunner</argument>
                             </arguments>
                         </configuration>
                     </execution>
