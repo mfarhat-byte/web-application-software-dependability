@@ -19,46 +19,39 @@
     <name>project_tracker</name>
     <description>Project Tracker</description>
 
+    <!-- ================= PROPERTIES ================= -->
     <properties>
+        <!-- Java -->
         <java.version>1.8</java.version>
-<<<<<<< Updated upstream
-
         <maven.compiler.release>8</maven.compiler.release>
 
-        <!-- JaCoCo -->
-=======
->>>>>>> Stashed changes
+        <!-- Quality & Testing -->
         <jacoco.version>0.8.11</jacoco.version>
         <jacoco.line.coverage>0.80</jacoco.line.coverage>
         <jacoco.branch.coverage>0.70</jacoco.branch.coverage>
         <pitest.version>1.7.3</pitest.version>
-        <jmh.version>1.36</jmh.version>
-<<<<<<< Updated upstream
 
-        <!-- SonarCloud Configuration -->
-        <sonar.organization>mfarhat-byte</sonar.organization>
-        <sonar.projectKey>mfarhat-byte_web-application-software-dependability</sonar.projectKey>
-        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-        <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
-=======
-        <jackson.version>2.15.2</jackson.version> <!-- updated for security -->
->>>>>>> Stashed changes
+        <!-- Benchmarks -->
+        <jmh.version>1.36</jmh.version>
     </properties>
 
     <!-- ================= DEPENDENCIES ================= -->
     <dependencies>
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
         <!-- Spring Boot -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
 
         <!-- Databases -->
@@ -67,24 +60,14 @@
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
         </dependency>
+
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
         </dependency>
 
-        <!-- Thymeleaf -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-            <version>2.3.2.RELEASE</version>
-        </dependency>
-
-<<<<<<< Updated upstream
-        <!-- DevTools -->
-=======
-        <!-- Dev tools -->
->>>>>>> Stashed changes
+        <!-- Dev Tools -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -92,12 +75,8 @@
             <optional>true</optional>
         </dependency>
 
-<<<<<<< Updated upstream
         <!-- ================= TESTING ================= -->
 
-=======
-        <!-- Testing -->
->>>>>>> Stashed changes
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -109,72 +88,40 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-junit-jupiter</artifactId>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
             <scope>test</scope>
         </dependency>
 
-        <!-- Frontend -->
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>webjars-locator</artifactId>
-            <version>0.47</version> <!-- updated -->
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>vue</artifactId>
-            <version>2.6.14</version> <!-- minor security upgrade -->
-        </dependency>
-        <dependency>
-            <groupId>org.webjars.npm</groupId>
-            <artifactId>axios</artifactId>
-            <version>0.19.2</version>
-        </dependency>
+        <!-- ================= JMH ================= -->
 
-<<<<<<< Updated upstream
-        <!-- ================= JMH BENCHMARKS ================= -->
-
-=======
-        <!-- Jackson overrides for security -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>${jackson.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-core</artifactId>
-            <version>${jackson.version}</version>
-        </dependency>
-
-        <!-- JMH -->
->>>>>>> Stashed changes
         <dependency>
             <groupId>org.openjdk.jmh</groupId>
             <artifactId>jmh-core</artifactId>
             <version>${jmh.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.openjdk.jmh</groupId>
             <artifactId>jmh-generator-annprocess</artifactId>
             <version>${jmh.version}</version>
             <scope>provided</scope>
         </dependency>
+
     </dependencies>
 
     <!-- ================= BUILD ================= -->
     <build>
         <plugins>
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
             <!-- Spring Boot -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -198,29 +145,20 @@
                 <version>2.22.2</version>
             </plugin>
 
-<<<<<<< Updated upstream
-            <plugin>
-                <groupId>org.sonarsource.scanner.maven</groupId>
-                <artifactId>sonar-maven-plugin</artifactId>
-                <version>4.0.0.4121</version>
-            </plugin>
-
-
             <!-- ================= JACOCO ================= -->
-=======
-            <!-- JaCoCo -->
->>>>>>> Stashed changes
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>${jacoco.version}</version>
                 <executions>
+
                     <execution>
                         <id>prepare-agent</id>
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
                     </execution>
+
                     <execution>
                         <id>report</id>
                         <phase>test</phase>
@@ -228,6 +166,7 @@
                             <goal>report</goal>
                         </goals>
                     </execution>
+
                     <execution>
                         <id>check</id>
                         <phase>verify</phase>
@@ -249,14 +188,11 @@
                             </rules>
                         </configuration>
                     </execution>
+
                 </executions>
             </plugin>
 
-<<<<<<< Updated upstream
             <!-- ================= PITEST ================= -->
-=======
-            <!-- PiTest -->
->>>>>>> Stashed changes
             <plugin>
                 <groupId>org.pitest</groupId>
                 <artifactId>pitest-maven</artifactId>
@@ -268,66 +204,6 @@
                         <version>0.14</version>
                     </dependency>
                 </dependencies>
-                <configuration>
-                    <targetClasses>
-                        <param>jmlcore.*</param>
-                    </targetClasses>
-                    <targetTests>
-                        <param>jmlcore.*Test</param>
-                    </targetTests>
-                    <excludedClasses>
-                        <param>com.mihneacristian.project_tracker.**</param>
-                    </excludedClasses>
-                    <excludedTestClasses>
-                        <param>**/*ApplicationTests</param>
-                    </excludedTestClasses>
-                    <threads>1</threads>
-                    <timeoutFactor>2</timeoutFactor>
-                    <timeoutConstant>4000</timeoutConstant>
-                    <outputFormats>
-                        <param>HTML</param>
-                        <param>XML</param>
-                    </outputFormats>
-                    <timestampedReports>false</timestampedReports>
-                    <verbose>true</verbose>
-                    <avoidCallsTo>
-                        <avoidCallsTo>org.springframework</avoidCallsTo>
-                        <avoidCallsTo>org.hibernate</avoidCallsTo>
-                        <avoidCallsTo>org.slf4j</avoidCallsTo>
-                    </avoidCallsTo>
-                    <useClasspathJar>false</useClasspathJar>
-                </configuration>
-            </plugin>
-
-            <!-- Exec Plugin for JMH -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>3.1.0</version>
-                <executions>
-                    <execution>
-                        <id>run-benchmarks</id>
-                        <phase>integration-test</phase>
-                        <goals>
-                            <goal>java</goal>
-                        </goals>
-                        <configuration>
-                            <mainClass>benchmarks.ItemBuilderBenchmark</mainClass>
-                            <classpathScope>test</classpathScope>
-<<<<<<< Updated upstream
-                            <executable>java</executable>
-                            <arguments>
-                                <argument>-classpath</argument>
-                                <classpath/>
-                                <argument>benchmarks.BenchmarkRunner</argument>
-                            </arguments>
-=======
-                            <includeProjectDependencies>true</includeProjectDependencies>
-                            <includePluginDependencies>true</includePluginDependencies>
->>>>>>> Stashed changes
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
 
         </plugins>
