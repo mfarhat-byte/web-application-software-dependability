@@ -6,10 +6,11 @@
 
     <modelVersion>4.0.0</modelVersion>
 
+    <!-- ================= PARENT ================= -->
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.2.7.RELEASE</version>
+        <version>2.7.18</version>
         <relativePath/>
     </parent>
 
@@ -21,9 +22,9 @@
 
     <!-- ================= PROPERTIES ================= -->
     <properties>
-        <!-- Compile Java 8, run on Java 11 / 17 -->
-        <java.version>1.8</java.version>
 
+        <!-- Java -->
+        <java.version>8</java.version>
         <maven.compiler.release>8</maven.compiler.release>
 
         <!-- JaCoCo -->
@@ -31,17 +32,20 @@
         <jacoco.line.coverage>0.80</jacoco.line.coverage>
         <jacoco.branch.coverage>0.70</jacoco.branch.coverage>
 
-        <!-- PiTest (Compatible with JUnit 5.5.2) -->
+        <!-- PiTest -->
         <pitest.version>1.7.3</pitest.version>
 
-        <!-- JMH for microbenchmarks -->
+        <!-- JMH -->
         <jmh.version>1.36</jmh.version>
 
-        <!-- SonarCloud Configuration -->
+        <!-- Sonar -->
         <sonar.organization>mfarhat-byte</sonar.organization>
         <sonar.projectKey>mfarhat-byte_web-application-software-dependability</sonar.projectKey>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-        <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+        <sonar.coverage.jacoco.xmlReportPaths>
+            target/site/jacoco/jacoco.xml
+        </sonar.coverage.jacoco.xmlReportPaths>
+
     </properties>
 
     <!-- ================= DEPENDENCIES ================= -->
@@ -75,7 +79,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
-            <version>2.3.2.RELEASE</version>
         </dependency>
 
         <!-- DevTools -->
@@ -116,22 +119,22 @@
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>webjars-locator</artifactId>
-            <version>0.38</version>
+            <version>0.46</version>
         </dependency>
 
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>vue</artifactId>
-            <version>2.6.11</version>
+            <version>2.6.14</version>
         </dependency>
 
         <dependency>
             <groupId>org.webjars.npm</groupId>
             <artifactId>axios</artifactId>
-            <version>0.19.2</version>
+            <version>0.21.4</version>
         </dependency>
 
-        <!-- ================= JMH BENCHMARKS ================= -->
+        <!-- ================= JMH ================= -->
 
         <dependency>
             <groupId>org.openjdk.jmh</groupId>
@@ -175,12 +178,12 @@
                 <version>2.22.2</version>
             </plugin>
 
+            <!-- Sonar -->
             <plugin>
                 <groupId>org.sonarsource.scanner.maven</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>
                 <version>4.0.0.4121</version>
             </plugin>
-
 
             <!-- ================= JACOCO ================= -->
             <plugin>
@@ -243,8 +246,6 @@
                 </dependencies>
 
                 <configuration>
-
-                    <!-- Target ONLY jmlcore classes -->
                     <targetClasses>
                         <param>jmlcore.*</param>
                     </targetClasses>
@@ -253,12 +254,10 @@
                         <param>jmlcore.*Test</param>
                     </targetTests>
 
-                    <!-- Exclude everything else -->
                     <excludedClasses>
                         <param>com.mihneacristian.project_tracker.**</param>
                     </excludedClasses>
 
-                    <!-- Exclude Spring Boot integration tests -->
                     <excludedTestClasses>
                         <param>**/*ApplicationTests</param>
                     </excludedTestClasses>
@@ -273,24 +272,19 @@
                     </outputFormats>
 
                     <timestampedReports>false</timestampedReports>
-
-                    <!-- Verbose to see errors -->
                     <verbose>true</verbose>
 
-                    <!-- Try to avoid Spring completely -->
                     <avoidCallsTo>
                         <avoidCallsTo>org.springframework</avoidCallsTo>
                         <avoidCallsTo>org.hibernate</avoidCallsTo>
                         <avoidCallsTo>org.slf4j</avoidCallsTo>
                     </avoidCallsTo>
 
-                    <!-- Don't use classpath jar -->
                     <useClasspathJar>false</useClasspathJar>
-
                 </configuration>
             </plugin>
 
-            <!-- ================= EXEC PLUGIN FOR JMH ================= -->
+            <!-- ================= JMH EXEC ================= -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
