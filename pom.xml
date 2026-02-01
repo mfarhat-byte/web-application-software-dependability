@@ -32,7 +32,7 @@
         <pitest.version>1.7.3</pitest.version>
 
         <!-- Benchmarks -->
-        <jmh.version>1.36</jmh.version>
+        <jmh.version>1.37</jmh.version>
     </properties>
 
     <!-- ================= DEPENDENCIES ================= -->
